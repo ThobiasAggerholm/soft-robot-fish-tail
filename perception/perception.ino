@@ -6,6 +6,7 @@
 
 //User includes
 #include "bendlab_sensor.hpp"
+#include "pressure_sensor.hpp"
 
 //Define the input pins for the sensors
 
@@ -16,19 +17,24 @@
 
 
 BendlabsSensor bend_sensor;
+ps_sensors::MPX5100 pressure_sensor;
 
 void setup()
 {
     Serial.begin(115200);             // Starting Serial communication with computer baudrate 115200 bps
     bend_sensor.init(ADS_RESET_PIN, ADS_INTERRUPT_PIN);
+    pressure_sensor.init(PRESSURE_SENSOR);
 }
 
 void loop()
 {
-    //Print Bendlabs sensor angle
+    //Print Bendlabs sensor anglePRESSURE_SENSOR
     if(Serial)
     {
+        Serial.println("Bendlabs sensor output: ");
         Serial.println(bend_sensor.read_angle());
+        Serial.println("Pressure sensor output: ");
+        Serial.println(pressure_sensor.read_pressure());
     }
     // Check for received hot keys on the com port
     if(Serial.available())
