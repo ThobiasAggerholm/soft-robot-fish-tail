@@ -10,7 +10,8 @@ class PumpValveController
     PumpController();
     init(int PUMP_1_PIN, int PUMP_1_SPEED,
          int PUMP_2_PIN, int PUMP_2_SPEED,
-         int VALVE_1_PIN, int VALVE_2_PIN);
+         int VALVE_1_PIN, int VALVE_1_DIR,
+         int VALVE_2_PIN, int VALVE_2_DIR);
     void pump_1_on(int motorspeed);
     void pump_1_off();
     void pump_2_on(int motorspeed);
