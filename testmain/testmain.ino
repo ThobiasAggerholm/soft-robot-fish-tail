@@ -4,16 +4,16 @@
 
 //Arduino PWM Speed Control：
 int PUMP_1_SPEED = 3;    ///<Pump 1 Speed
-int PUMP_1_PIN = 4;    ///<Pump 1 Direction
+int PUMP_1_PIN = 4;    ///<Pump 1 Direction M1
 
 int VALVE_1_PIN = 11;   ///<Valve 1 Enable
-int VALVE_1_DIR = 12;  ///<Valve  1 Direction
+int VALVE_1_DIR = 12;  ///<Valve  1 Direction M2
 
 int PUMP_2_SPEED = 5; ///<Pump 2 Speed
-int PUMP_2_PIN = 8; ///<Pump 2 Direction
+int PUMP_2_PIN = 8; ///<Pump 2 Direction M3
 
 int VALVE_2_PIN = 6; ///<Valve 2 Enable
-int VALVE_2_DIR = 7; ///<Valve 1 Direction
+int VALVE_2_DIR = 7; ///<Valve 1 Direction M4
 
 int timecounter = 1;  // Auxiliar variable for controlling the time of the process
 
