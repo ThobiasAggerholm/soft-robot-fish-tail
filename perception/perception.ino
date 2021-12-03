@@ -7,7 +7,7 @@
 //User includes
 #include "bendlab_sensor.hpp"
 #include "pressure_sensor.hpp"
-
+#include "pid.hpp"
 //Define the input pins for the sensors
 
 #define ADS_RESET_PIN      (18)           // Bendlabs sensor Pin number attached to ads reset line.
@@ -18,12 +18,14 @@
 
 BendlabsSensor bend_sensor;
 ps_sensors::MPX5100 pressure_sensor;
+Controller::PID pid;
 
 void setup()
 {
     Serial.begin(115200);             // Starting Serial communication with computer baudrate 115200 bps
     bend_sensor.init(ADS_RESET_PIN, ADS_INTERRUPT_PIN);
     pressure_sensor.init(PRESSURE_SENSOR);
+    pid.init(1., 10, 2, 5);
 }
 
 void loop()
