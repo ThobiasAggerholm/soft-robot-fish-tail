@@ -7,7 +7,7 @@ namespace Controller
     {
         public:
         PID();
-        void init(double dt, double kp, double ki, double kd);
+        void init(double dt, double kp, double ki, double kd, double saturation = 255);
 
         double calculate(double target, double feedback);
 
@@ -19,6 +19,7 @@ namespace Controller
         double kp_;
         double ki_;
         double kd_;
+        double saturation_ = 0;
     };
 }
 

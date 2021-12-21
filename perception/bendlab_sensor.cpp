@@ -64,10 +64,26 @@
             case '0':
             // Take first calibration point at zero degrees
             ads_calibrate(ADS_CALIBRATE_FIRST, 0);
+            if(partly_configured == false)
+            {
+                partly_configured = true;
+            }
+            else
+            {
+                configured = true;
+            }
             break;
             case '9':
             // Take second calibration point at ninety degrees
             ads_calibrate(ADS_CALIBRATE_SECOND, 90);
+            if(partly_configured == false)
+            {
+                partly_configured = true;
+            }
+            else
+            {
+                configured = true;
+            }
             break;
             case 'c':
             // Restore factory calibration coefficients

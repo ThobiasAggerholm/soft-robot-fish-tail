@@ -17,10 +17,14 @@ class BendlabsSensor
     float read_angle();
     void parse_com_port(char key);
 
+    bool configured = false;
+    bool partly_configured = false;
+
     private:
     void deadzone_filter(float *sample);
     void signal_filter(float *sample);
 
+    
     int ads_ok;
 
 };
