@@ -17,14 +17,16 @@ void Controller::PID::init(double dt, double kp, double ki, double kd, double sa
 double Controller::PID::calculate(double target, double feedback)
 {
         double error = target - feedback;
-        double Pout = error * kd_;
+        double Pout = error * kp_;
         double Dout = (error - prev_error)/dt_ * kd_;
         double Iout = 0;
-        if(Pout + Dout <= saturation_)
+
+        if(Pout + Dout < saturation_)
         {
             integral += error * dt_;
             Iout = integral * ki_;
         }
+        
         prev_error = error;
         return Pout + Iout + Dout;
 }

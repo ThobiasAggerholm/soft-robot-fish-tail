@@ -43,8 +43,7 @@ bool configured = false;
 
 float sin_x = 0;
 float sin_w = 1./8.;
-float sin_A = 20.;
-
+float sin_A = 20.3;
 
 
 void setup()
@@ -52,7 +51,7 @@ void setup()
     Serial.begin(115200);             // Starting Serial communication with computer baudrate 115200 bps
     bend_sensor.init(ADS_RESET_PIN, ADS_INTERRUPT_PIN);
     pressure_sensor.init(PRESSURE_SENSOR);
-    pid.init(1, 5, 1, 5);
+    pid.init(1, 5, 2, 0, 100);
     pump_valve_controller.init(M1, E1, M3,E3, M2, E2,
          M4, E4);
     pump_valve_controller.valve_2_off();
@@ -63,24 +62,14 @@ void setup()
 
 void loop()
 {
-  /*
-  delay(3000);
-  while(true)
-  {
-     pump_valve_controller.valve_1_off();
-     pump_valve_controller.valve_2_on();
-     pump_valve_controller.pump_1_on(100);
-     delay(2000);
-     pump_valve_controller.valve_2_off();
-     pump_valve_controller.valve_1_on();
-     pump_valve_controller.pump_2_on(100);
-     delay(2000);   
-  }*/
 
-   
-   
-    if(bend_sensor.configured)
+   float bend_sensor_angle = bend_sensor.read_angle();
+
+    Serial.println(bend_sensor_angle);
+    if(configured)
     {
+                
+        
         float bend_sensor_angle = bend_sensor.read_angle();
         if(abs(bend_sensor_angle) < 180 && abs(bend_sensor_angle) > 0.001)
         {
@@ -89,7 +78,7 @@ void loop()
           
           Serial.print(target_angle);
           Serial.print(",");
-          Serial.println(bend_sensor_angle);
+          Serial.print(bend_sensor_angle);
 
 
  
@@ -97,9 +86,11 @@ void loop()
           if(target_angle >= 0)
           {
             float motor_command = pid.calculate(target_angle, bend_sensor_angle);
-            pump_valve_controller.valve_2_on();
+            Serial.print(",");
+            Serial.println(motor_command);
             if(motor_command >= 0)
             {
+
                 pump_valve_controller.valve_1_off();
                 pump_valve_controller.pump_1_on(motor_command);
                
@@ -113,8 +104,9 @@ void loop()
           }
           else
           {
-            float motor_command = pid.calculate(-target_angle, -bend_sensor_angle);
-            pump_valve_controller.valve_1_on();
+            float motor_command = pid.calculate(-target_angle, -bend_sensor_angle);            
+            Serial.print(",");
+            Serial.println(motor_command);
             if(motor_command >= 0)
             {
                 pump_valve_controller.valve_2_off();
@@ -136,21 +128,32 @@ void loop()
 
   
            
-                  
+         
           }
           sin_x += 0.1;
     }
     else{
-      pump_valve_controller.valve_2_on();
       pump_valve_controller.valve_1_on();
+      pump_valve_controller.valve_2_on();
     }
+    
         
 
 
     // Check for received hot keys on the com port
     if(Serial.available())
     {
-        bend_sensor.parse_com_port(Serial.read());
+      char key = Serial.read();
+      if(key == 'y')
+      {
+        configured = true;
+      }
+      else
+      {
+        bend_sensor.parse_com_port(key);
+      }
+      
+        
     }
 
     
@@ -158,5 +161,5 @@ void loop()
     // Delay 5ms to keep 100 Hz sampling rate between bend and stretch, Do not increase rate past 500 Hz.
     delay(100);
     
-
+*/
 }
